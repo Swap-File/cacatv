@@ -1,3 +1,4 @@
+
 /* GStreamer
  * Copyright (C) <1999> Erik Walthinsen <omega@cse.ogi.edu>
  *
@@ -42,7 +43,7 @@
 #include <sys/time.h>
 
 #include "gstcacasink.h"
-
+#include "gstcacatv.h"
 
 //#define GST_CACA_DEFAULT_RED_MASK R_MASK_32_REVERSE_INT
 //#define GST_CACA_DEFAULT_GREEN_MASK G_MASK_32_REVERSE_INT
@@ -407,6 +408,11 @@ gst_cacasink_change_state (GstElement * element, GstStateChange transition)
 static gboolean
 plugin_init (GstPlugin * plugin)
 {
+
+  if (!gst_element_register (plugin, "cacatv", GST_RANK_NONE,
+      GST_TYPE_CACATV))
+    return FALSE;
+
   if (!gst_element_register (plugin, "cacasink", GST_RANK_NONE,
           GST_TYPE_CACASINK))
     return FALSE;
@@ -416,6 +422,6 @@ plugin_init (GstPlugin * plugin)
 
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
     GST_VERSION_MINOR,
-    cacasink,
+    libcaca,
     "Colored ASCII Art video sink",
     plugin_init, VERSION, GST_LICENSE, GST_PACKAGE_NAME, GST_PACKAGE_ORIGIN)
