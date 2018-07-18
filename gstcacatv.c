@@ -33,8 +33,6 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#include <stdio.h>
-#include <string.h>
 #include "gstcacatv.h"
 
 /* cacatv signals and args */
@@ -334,7 +332,7 @@ gst_cacatv_set_property (GObject * object, guint prop_id, const GValue * value,
     }
     case PROP_CANVAS_WIDTH:{
       cacatv->canvas_width = g_value_get_int (value);
-      /* recalculate output resolution based on new with */
+      /* recalculate output resolution based on new width */
       gst_pad_mark_reconfigure (GST_BASE_TRANSFORM_SRC_PAD (object));
       break;
     }
