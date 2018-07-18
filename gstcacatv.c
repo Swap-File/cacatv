@@ -57,13 +57,13 @@ enum
   PROP_ANTIALIASING
 };
 
-static GstStaticPadTemplate sink_template_tv = GST_STATIC_PAD_TEMPLATE ("sink",
+static GstStaticPadTemplate sink_template = GST_STATIC_PAD_TEMPLATE ("sink",
     GST_PAD_SINK,
     GST_PAD_ALWAYS,
     GST_STATIC_CAPS (GST_VIDEO_CAPS_MAKE
         ("{ RGB, BGR, RGBx, xRGB, BGRx, xBGR, RGBA, RGB16, RGB15 }"))
     );
-static GstStaticPadTemplate src_template_tv = GST_STATIC_PAD_TEMPLATE ("src",
+static GstStaticPadTemplate src_template = GST_STATIC_PAD_TEMPLATE ("src",
     GST_PAD_SRC,
     GST_PAD_ALWAYS,
     GST_STATIC_CAPS (GST_VIDEO_CAPS_MAKE ("{ ARGB }"))
@@ -229,7 +229,7 @@ gst_cacatv_transform_caps (GstBaseTransform * trans, GstPadDirection direction,
 
     gst_caps_set_value (ret, "format", &formats);
   } else {
-    ret = gst_static_pad_template_get_caps (&sink_template_tv);
+    ret = gst_static_pad_template_get_caps (&sink_template);
   }
 
   return ret;
@@ -239,12 +239,12 @@ static void
 gst_cacatv_class_init (GstCACATvClass * klass)
 {
   GObjectClass *gobject_class;
-  GstElementClass *gstelement_class_tv;
+  GstElementClass *gstelement_class;
   GstVideoFilterClass *videofilter_class;
   GstBaseTransformClass *transform_class;
 
   gobject_class = (GObjectClass *) klass;
-  gstelement_class_tv = (GstElementClass *) klass;
+  gstelement_class = (GstElementClass *) klass;
   videofilter_class = (GstVideoFilterClass *) klass;
   transform_class = (GstBaseTransformClass *) klass;
 
@@ -274,14 +274,14 @@ gst_cacatv_class_init (GstCACATvClass * klass)
           "Enables Anti-Aliasing", GST_CACA_DEFAULT_ANTIALIASING,
           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-  gst_element_class_set_static_metadata (gstelement_class_tv,
+  gst_element_class_set_static_metadata (gstelement_class,
       "CacaTV effect", "Filter/Effect/Video",
       "Colored ASCII art effect", "Eric Marks <bigmarkslp@gmail.com>");
 
-  gst_element_class_add_static_pad_template (gstelement_class_tv,
-      &sink_template_tv);
-  gst_element_class_add_static_pad_template (gstelement_class_tv,
-      &src_template_tv);
+  gst_element_class_add_static_pad_template (gstelement_class,
+      &sink_template);
+  gst_element_class_add_static_pad_template (gstelement_class,
+      &src_template);
 
   videofilter_class->transform_frame =
       GST_DEBUG_FUNCPTR (gst_cacatv_transform_frame);
