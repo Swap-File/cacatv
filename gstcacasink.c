@@ -40,8 +40,6 @@
 #endif
 
 #include <string.h>
-#include <sys/time.h>
-
 #include "gstcacasink.h"
 #include "gstcacatv.h"
 
@@ -422,6 +420,6 @@ plugin_init (GstPlugin * plugin)
 
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
     GST_VERSION_MINOR,
-    libcaca,
+    libgstcacasink,
     "Colored ASCII Art video sink & filter",
     plugin_init, VERSION, GST_LICENSE, GST_PACKAGE_NAME, GST_PACKAGE_ORIGIN)
